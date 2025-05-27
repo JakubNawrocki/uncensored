@@ -23,7 +23,7 @@ const WhyUncensored = () => {
       {/* Parallax Background */}
       <div 
         className="absolute inset-0 bg-fixed bg-center bg-cover opacity-20 parallax"
-        style={{ backgroundImage: "url('/images/guys.avif')" }}
+        style={{ /*backgroundImage: "url('/images/guys.avif')" */}}
       ></div>
       
       <div className="container-custom relative z-10">

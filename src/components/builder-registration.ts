@@ -1,11 +1,11 @@
 import { Builder } from '@builder.io/react';
-import Hero from './Hero';
-import Services from './Services';
-import Pricing from './Pricing';
-import AboutSection from './AboutSection';
-import WhyUncensored from './WhyUncensored';
-import CallToAction from './CallToAction';
-import SpotifyPlayer from './SpotifyPlayer';
+import Hero from './layout/Hero';
+import Services from './layout/Services';
+import Pricing from './layout/Pricing';
+import AboutSection from './layout/AboutSection';
+import WhyUncensored from './layout/WhyUncensored';
+import CallToAction from './layout/CallToAction';
+import SpotifyPlayer from './layout/SpotifyPlayer';
 
 // Register all components with Builder.io
 export function registerLayoutComponents() {

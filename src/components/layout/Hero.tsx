@@ -31,9 +31,9 @@ const Hero = () => {
       {/* Content */}
       <div className="container-custom relative z-10 text-center">
         <img 
-          src="/images/5.png" 
+          src="/images/Uncensored Studios Transparent .png" 
           alt="Uncensored Studios Logo" 
-          className="mx-auto mb-8 w-48 md:w-64 shadow-white-md"
+          className="mx-auto mb-8 w-48 md:w-64"
         />
         <h1 className="text-white mb-6">The Sound of the Underground.</h1>
         <p className="text-gray-300 text-xl mb-8 max-w-3xl mx-auto">

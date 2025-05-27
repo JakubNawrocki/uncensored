@@ -4,7 +4,7 @@ const CallToAction = () => {
       {/* Parallax Background with Overlay */}
       <div 
         className="absolute inset-0 bg-fixed bg-center bg-cover opacity-20 parallax"
-        style={{ backgroundImage: "url('/images/team.jpg')" }}
+        style={{/* backgroundImage: "url('/images/team.jpg')" */}}
       ></div>
       
       <div className="absolute inset-0 bg-primary bg-opacity-90"></div>
