@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
+    
+    --card: 0 0% 3%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 3%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --primary: 0 72% 35%; /* #a80707 */
+    --primary-foreground: 0 0% 100%;
+ 
+    --secondary: 0 0% 9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --accent: 0 0% 9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 72% 35%;
+ 
+    --radius: 0.5rem;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Oswald', sans-serif;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold;
+    font-family: 'Oswald', sans-serif;
+    text-transform: uppercase;
+  }
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+  h3 {
+    @apply text-2xl md:text-3xl;
+  }
+}
+
+/* Custom styles */
+.hero-section {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/studio-bg.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.service-card {
+  @apply bg-card p-6 rounded-lg transition-all duration-300;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.2);
+}
+
+.service-card:hover {
+  @apply transform -translate-y-1;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.cta-button {
+  @apply bg-primary text-white font-bold py-3 px-6 rounded-md transition-all duration-300 hover:bg-primary/90;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cta-button:hover {
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+
+.section-padding {
+  @apply py-16 md:py-24;
+}
+
+.container-custom {
+  @apply container mx-auto px-4 md:px-8;
+}
+
+.card-shadow {
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.8);
+}
+
+.parallax {
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.form-input {
+  @apply w-full bg-secondary border border-border text-white rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary;
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.4);
+}
+
+.form-input:focus {
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+}
