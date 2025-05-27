@@ -19,7 +19,7 @@ module.exports = {
   extend: {
     screens: {
       // restore Tailwind's defaults
-      sm: "640px",
+      sm: "420px",
       md: "768px",
       lg: "1024px",
       xl: "1280px",
