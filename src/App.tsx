@@ -11,6 +11,8 @@ import ServicesPage from './pages/ServicesPage';
 import BookPage from './pages/BookPage';
 import PricingPage from './pages/PricingPage';
 
+import ScrollToTop from './components/ScrollToTop';
+
 // Initialize Builder with your API key
 builder.init(BUILDER_API_KEY);
 
