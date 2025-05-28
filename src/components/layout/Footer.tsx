@@ -17,13 +17,13 @@ const Footer = () => {
               Premium Recording and Production Studio in East London.
             </p>
             <div className="flex space-x-4">
-              <a href="https://instagram.com" className="text-white hover:text-primary transition-colors">
+              <a href="https://www.instagram.com/uncensored.studioss/" className="text-white hover:text-primary transition-colors">
                 <Instagram size={24} />
               </a>
               <a href="mailto:info@uncensoredstudios.com" className="text-white hover:text-primary transition-colors">
                 <Mail size={24} />
               </a>
-              <a href="tel:+442012345678" className="text-white hover:text-primary transition-colors">
+              <a href="tel:+4407985121414" className="text-white hover:text-primary transition-colors">
                 <Phone size={24} />
               </a>
               <a href="https://uncensoredstudios.myshopify.com/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-primary transition-colors">
