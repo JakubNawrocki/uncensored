@@ -57,6 +57,9 @@ function BuilderPage() {
 
 // Main App component
 function App() {
+  useEffect(() => {
+    document.title = "Uncensored Studios - Premium Recording Studio in East London | Book Now";
+  }, []);
   return (
     <Router>
       <div className="app bg-black text-white min-h-screen">
