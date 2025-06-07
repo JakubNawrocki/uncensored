@@ -1,12 +1,11 @@
 import { useState } from 'react';
 
 const SpotifyPlayer = () => {
-  const [currentPlaylist, setCurrentPlaylist] = useState('37i9dQZF1DX0XUsuxWHRQd'); // Default playlist - example
+  const [currentPlaylist, setCurrentPlaylist] = useState('1ixFBVkjrZblvpcdUS91Ev'); // Default playlist - example
   
   const playlists = [
-    { id: '37i9dQZF1DX0XUsuxWHRQd', name: 'Studio Sessions' },
-    { id: '37i9dQZF1DX4dyzvuaRJ0n', name: 'Artist Showcase' },
-    { id: '37i9dQZF1DX1lVhptIYRda', name: 'Latest Releases' }
+    { id: '0QLjukrSh0RdNqgDWg6zh1', name: 'Artist Showcase' },
+    { id: '1ixFBVkjrZblvpcdUS91Ev', name: 'Latest Releases' }
   ];
   
   return (

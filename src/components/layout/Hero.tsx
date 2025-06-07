@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 const Hero = () => {
   return (
-    <div className="relative h-screen flex items-center justify-center overflow-hidden">
+    <div className="hero-section relative h-screen flex items-center justify-center overflow-hidden">
       {/* Desktop Video */}
       <video 
         className="absolute w-full h-full object-cover hidden md:block"
@@ -24,6 +24,9 @@ const Hero = () => {
       >
         <source src="/images/8114941-uhd_2160_3840_24fps.mp4" type="video/mp4" />
       </video>
+
+      <div className="absolute inset-0 scanline-overlay"></div>
+
       
       {/* Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-70"></div>
@@ -33,7 +36,7 @@ const Hero = () => {
         <img 
           src="/images/Uncensored Studios Transparent .png" 
           alt="Uncensored Studios Logo" 
-          className="mx-auto mb-8 w-48 md:w-64"
+          className="mx-auto mb-8 w-48 md:w-64 logo-glow"
         />
         <h1 className="text-white mb-6">The Sound of the Underground.</h1>
         <p className="text-gray-300 text-xl mb-8 max-w-3xl mx-auto">
