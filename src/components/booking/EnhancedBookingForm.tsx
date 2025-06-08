@@ -210,7 +210,7 @@ const EnhancedBookingForm: React.FC = () => {
 
   if (formSubmitted) {
     return (
-      <div className="bg-secondary p-8 rounded-lg text-center max-w-3xl mx-auto">
+      <div className="bg-secondary p-8 rounded-lg text-center max-w-3xl mx-auto mt-6 mb-6">
         <div className="text-5xl mb-4">🎤</div>
         <h3 className="text-white text-2xl mb-4">Booking Request Received!</h3>
         <p className="text-gray-300 mb-6">
