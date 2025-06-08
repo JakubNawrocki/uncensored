@@ -147,3 +147,41 @@
   opacity: 0.2; /* Adjust for subtlety */
 }
 
+@keyframes glitch {
+  0%, 100% {
+    text-shadow: 
+      0.02em 0 0 rgba(255, 0, 0, 0.75),
+      -0.02em -0 0 rgba(0, 255, 0, 0.75),
+      0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  15% {
+    text-shadow: 
+      0.5em 0 0 rgba(255, 0, 0, 0.75),
+      -0.5em -0 0 rgba(0, 255, 0, 0.75),
+      0.25em 0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+  50% {
+    text-shadow: 
+      -0.02em 0.005em 0 rgba(255, 0, 0, 0.75),
+      0.02em -0.005em 0 rgba(0, 255, 0, 0.75),
+      -0.025em -0.05em 0 rgba(0, 0, 255, 0.75);
+  }
+}
+
+h1 {
+  animation: glitch 2s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes glow {
+  from {
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+}
+to {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.8),
+               0 0 30px rgba(255, 255, 255, 0.6);
+}
+}
+
+h2:hover {
+  animation: glow 1.5s ease-in-out infinite alternate;
+}

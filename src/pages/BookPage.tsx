@@ -42,16 +42,16 @@ const BookPage = () => {
               <h3 className="text-white text-xl font-bold mb-4">Dry Hire Rates</h3>
               <div className="space-y-4 mb-6">
                 <div className="border-b border-border pb-4">
-                  <p className="text-white font-bold">£60/hour</p>
+                  <p className="text-white font-bold">£20/hour</p>
                   <p className="text-gray-500">Minimum 2-hour booking</p>
                 </div>
                 <div className="border-b border-border pb-4">
-                  <p className="text-white font-bold">£350 for full day</p>
+                  <p className="text-white font-bold">£170 for full day</p>
                   <p className="text-gray-500">10 hours</p>
                 </div>
                 <div>
-                  <p className="text-white font-bold">£1,500 for weekly hire</p>
-                  <p className="text-gray-500">7 days</p>
+                  <p className="text-white font-bold">£600 for weekly hire</p>
+                  <p className="text-gray-500">40 hours</p>
                 </div>
               </div>
               
@@ -59,7 +59,7 @@ const BookPage = () => {
               <ul className="space-y-2 text-gray-400">
                 <li>• A brief studio orientation is provided at the start of your first session</li>
                 <li>• Equipment must be returned to original settings after use</li>
-                <li>• Additional charges may apply for specialized equipment requests</li>
+                <li>• Additional charges may apply for specialised equipment requests</li>
                 <li>• 50% deposit required to secure booking</li>
               </ul>
             </div>
