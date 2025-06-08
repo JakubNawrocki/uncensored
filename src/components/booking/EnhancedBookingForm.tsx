@@ -228,7 +228,7 @@ const EnhancedBookingForm: React.FC = () => {
   const price = calculatePrice();
 
   return (
-    <div className="max-w-5xl mx-auto">
+    <div className="max-w-5xl mx-auto mt-2 mb-6">
       {/* Selected Time Display */}
       {formData.date && formData.time && !showCalendar && (
         <div className="bg-secondary rounded-lg p-4 mb-6 shadow-white-sm">
@@ -365,7 +365,7 @@ const EnhancedBookingForm: React.FC = () => {
                       day: 'numeric' 
                     }).toUpperCase()}
                   </h4>
-                  <div className="space-y-2 max-h-80 overflow-y-auto">
+                  <div className="space-y-2 max-h-80 overflow-y-auto p-2">
                     {getAvailabilityForDate(selectedDate)?.slots.map((slot: TimeSlot, idx: number) => (
                       <button
                         key={idx}
