@@ -22,6 +22,8 @@ interface BookingFormData {
   message: string;
   date?: string;
   time?: string;
+  referralSource: string;
+  referenceCode?: string;
 }
 
 interface Service {
@@ -82,7 +84,8 @@ const EnhancedBookingForm: React.FC = () => {
     phone: '',
     service: 'dry-hire',
     hours: '2',
-    message: ''
+    message: '',
+    referralSource: ''
   });
 
   const services: Service[] = [
@@ -163,6 +166,16 @@ const EnhancedBookingForm: React.FC = () => {
       return;
     }
 
+    if (!formData.referralSource) {
+      alert('Please tell us how you found us');
+      return;
+    }
+
+    if (formData.referralSource === 'reference-code' && !formData.referenceCode) {
+      alert('Please enter your reference code');
+      return;
+    }
+
     try {
       const response = await fetch('/.netlify/functions/sendBooking', {
         method: 'POST',
@@ -212,7 +225,8 @@ const EnhancedBookingForm: React.FC = () => {
               phone: '',
               service: 'dry-hire',
               hours: '2',
-              message: ''
+              message: '',
+              referralSource: ''
             });
             setSelectedDate(null);
             setSelectedSlot(null);
@@ -455,6 +469,36 @@ const EnhancedBookingForm: React.FC = () => {
                   <option key={option.value} value={option.value}>{option.label}</option>
                 ))}
               </select>
+            </div>
+          )}
+
+          <div>
+            <label className="block text-white mb-2">Where did you find us? *</label>
+            <select 
+              value={formData.referralSource} 
+              onChange={(e) => setFormData(prev => ({ ...prev, referralSource: e.target.value, referenceCode: '' }))}
+              required
+              className="form-input"
+            >
+              <option value="">Select an option</option>
+              <option value="advertisement">Advertisement</option>
+              <option value="google-search">Google search</option>
+              <option value="social-media">Social media</option>
+              <option value="reference-code">Reference code</option>
+            </select>
+          </div>
+
+          {formData.referralSource === 'reference-code' && (
+            <div>
+              <label className="block text-white mb-2">Reference Code *</label>
+              <input
+                type="text"
+                value={formData.referenceCode || ''}
+                onChange={(e) => setFormData(prev => ({ ...prev, referenceCode: e.target.value.toUpperCase() }))}
+                required
+                className="form-input"
+                placeholder="Enter your reference code"
+              />
             </div>
           )}
         </div>
