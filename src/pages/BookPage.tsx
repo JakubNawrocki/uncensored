@@ -1,4 +1,4 @@
-import BookingForm from '../components/booking/BookingForm';
+import BookingForm from '../components/booking/EnhancedBookingForm';
 import LogoRibbon from '../components/layout/LogoRibbon';
 
 // Builder.io compatible BookPage component
