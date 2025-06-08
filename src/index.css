@@ -185,3 +185,33 @@ to {
 h2:hover {
   animation: glow 1.5s ease-in-out infinite alternate;
 }
+
+@keyframes ribbonScroll {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.logo-ribbon-wrapper {
+  overflow: hidden;
+  background-color: black;
+  padding: 1.5rem 2rem;
+  position: relative;
+}
+
+.logo-ribbon-track {
+  display: flex;
+  gap: 2rem;
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+  will-change: transform;
+  transform-origin: center center;
+}
+
+
+.logo-ribbon-wrapper::after {
+  content: none !important; /* This nukes any ::after effects */
+}

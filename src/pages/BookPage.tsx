@@ -1,4 +1,5 @@
 import BookingForm from '../components/booking/BookingForm';
+import LogoRibbon from '../components/layout/LogoRibbon';
 
 // Builder.io compatible BookPage component
 const BookPage = () => {
@@ -9,6 +10,8 @@ const BookPage = () => {
           <h1 className="text-white text-center">Book Studio</h1>
         </div>
       </div>
+
+      <LogoRibbon />
       
       <BookingForm data-builder-block="booking-form" />
       

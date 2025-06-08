@@ -3,6 +3,8 @@ import Services from '../components/layout/Services';
 import WhyUncensored from '../components/layout/WhyUncensored';
 import SpotifyPlayer from '../components/layout/SpotifyPlayer';
 import CallToAction from '../components/layout/CallToAction';
+import LogoRibbon from '../components/layout/LogoRibbon';
+
 
 // Builder.io compatible HomePage component
 const HomePage = () => {
@@ -13,9 +15,13 @@ const HomePage = () => {
       
       {/* Services Section */}
       <Services data-builder-block="services-section" />
+
+      <LogoRibbon />
       
       {/* Why Choose Us Section */}
       <WhyUncensored data-builder-block="why-section" />
+      
+      <LogoRibbon />
       
       {/* Spotify Player Section */}
       <SpotifyPlayer data-builder-block="spotify-section" />

@@ -1,5 +1,6 @@
 import Pricing from '../components/layout/Pricing';
 import CallToAction from '../components/layout/CallToAction';
+import LogoRibbon from '../components/layout/LogoRibbon';
 
 const PricingPage = () => {
   return (
@@ -9,6 +10,8 @@ const PricingPage = () => {
           <h1 className="text-white text-center">Pricing</h1>
         </div>
       </div>
+
+      <LogoRibbon />
       
       <Pricing />
       <CallToAction />

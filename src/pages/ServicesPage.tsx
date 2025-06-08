@@ -1,5 +1,6 @@
 import CallToAction from '../components/layout/CallToAction';
 import Services from '../components/layout/Services';
+import LogoRibbon from '../components/layout/LogoRibbon';
 
 // Builder.io compatible ServicesPage component
 const ServicesPage = () => {
@@ -10,6 +11,8 @@ const ServicesPage = () => {
           <h1 className="text-white text-center">Our Services</h1>
         </div>
       </div>
+
+      <LogoRibbon />
       
       <Services data-builder-block="services-section" />
       

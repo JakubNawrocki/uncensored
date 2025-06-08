@@ -1,5 +1,6 @@
 import AboutSection from '../components/layout/AboutSection';
 import CallToAction from '../components/layout/CallToAction';
+import LogoRibbon from '../components/layout/LogoRibbon';
 
 // Builder.io compatible AboutPage component
 const AboutPage = () => {
@@ -10,6 +11,7 @@ const AboutPage = () => {
           <h1 className="text-white text-center">About Us</h1>
         </div>
       </div>
+      <LogoRibbon />
       
       <AboutSection data-builder-block="about-section" />
       <CallToAction data-builder-block="cta-section" />
