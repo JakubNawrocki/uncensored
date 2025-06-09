@@ -1,6 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import { Calendar, Clock, Check, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 
+// -------- ICS Calendar Integration --------
+const CALENDAR_ICS_URL =
+  'https://calendar.google.com/calendar/ical/c_d645542bb4834c2f491ebae4ab0fcd5f17e67b8c85af201a2348c09c248a6353%40group.calendar.google.com/public/basic.ics';
+
+function parseICS(icsText: string) {
+  const events: { date: string; startHour: string }[] = [];
+  const lines = icsText.split(/\r?\n/);
+  let currentEvent: any = null;
+
+  for (const line of lines) {
+    if (line === 'BEGIN:VEVENT') currentEvent = {};
+    if (line.startsWith('DTSTART')) {
+      const match = line.match(/DTSTART.*:(\d{8})T(\d{2})/);
+      if (match) {
+        const [_, yyyymmdd, hour] = match;
+        const date = `${yyyymmdd.slice(0, 4)}-${yyyymmdd.slice(4, 6)}-${yyyymmdd.slice(6, 8)}`;
+        currentEvent.date = date;
+        currentEvent.startHour = `${parseInt(hour, 10)}:00`;
+      }
+    }
+    if (line === 'END:VEVENT' && currentEvent) {
+      if (currentEvent.date && currentEvent.startHour) {
+        events.push({ date: currentEvent.date, startHour: currentEvent.startHour });
+      }
+      currentEvent = null;
+    }
+  }
+  return events;
+}
+
+// -------- End ICS Section --------
+
 interface TimeSlot {
   time: string;
   duration: number;
@@ -33,39 +65,34 @@ interface Service {
   perTrack?: boolean;
 }
 
-// This would come from your API/SimplyBook integration
 const fetchAvailability = async (month: Date): Promise<DayAvailability[]> => {
-  // Simulate API call - replace with actual SimplyBook or Google Calendar API
+  // Simulate API call
   await new Promise(resolve => setTimeout(resolve, 500));
-  
+
   const slots: DayAvailability[] = [];
   const year = month.getFullYear();
   const monthNum = month.getMonth();
-  
-  // Generate mock availability for demo
+
   for (let day = 1; day <= new Date(year, monthNum + 1, 0).getDate(); day++) {
     const date = new Date(year, monthNum, day);
     if (date.getDay() !== 0 && date.getDay() !== 6) { // Weekdays only
       const daySlots: TimeSlot[] = [];
-      
-      // Studio hours: 9 AM - 10 PM
       for (let hour = 9; hour <= 21; hour++) {
-        if (Math.random() > 0.3) { // 70% availability
+        if (Math.random() > 0.3) {
           daySlots.push({
             time: `${hour}:00`,
             duration: 1,
             available: true,
-            price: hour >= 18 ? 25 : 20 // Peak hours pricing
+            price: hour >= 18 ? 25 : 20
           });
         }
       }
-      
       if (daySlots.length > 0) {
         slots.push({ date: date.toISOString().split('T')[0], slots: daySlots });
       }
     }
   }
-  
+
   return slots;
 };
 
@@ -77,7 +104,7 @@ const EnhancedBookingForm: React.FC = () => {
   const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
   const [showCalendar, setShowCalendar] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
-  
+
   const [formData, setFormData] = useState<BookingFormData>({
     name: '',
     email: '',
@@ -87,6 +114,18 @@ const EnhancedBookingForm: React.FC = () => {
     message: '',
     referralSource: ''
   });
+
+  // --- Google Calendar bookings ---
+  const [bookedSlots, setBookedSlots] = useState<{ date: string; startHour: string }[]>([]);
+
+  useEffect(() => {
+    fetch(CALENDAR_ICS_URL)
+      .then(res => res.text())
+      .then(parseICS)
+      .then(setBookedSlots)
+      .catch(() => setBookedSlots([]));
+  }, []);
+  // -------------------------------
 
   const services: Service[] = [
     { id: 'dry-hire', name: 'Dry Hire (Studio Only)', basePrice: 20 },
@@ -139,28 +178,27 @@ const EnhancedBookingForm: React.FC = () => {
   const calculatePrice = (): number | null => {
     const service = services.find(s => s.id === formData.service);
     if (!service) return null;
-    
+
     if (service.perTrack) {
       return service.basePrice;
     }
-    
+
     const hours = parseInt(formData.hours);
     let hourlyRate = service.basePrice;
-    
-    // Apply discounts for longer sessions
+
     if (service.id === 'recording') {
-      if (hours >= 8) return 220; // Full day rate
+      if (hours >= 8) return 220;
       if (hours >= 4 && hours <= 7) hourlyRate = 35;
     } else if (service.id === 'dry-hire' || service.id === 'dj-practice') {
-      if (hours >= 8) return 150; // Full day rate
+      if (hours >= 8) return 150;
     }
-    
+
     return hourlyRate * hours;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.date || !formData.time) {
       alert('Please select a date and time slot');
       return;
@@ -200,7 +238,7 @@ const EnhancedBookingForm: React.FC = () => {
     const lastDay = new Date(year, month + 1, 0);
     const daysInMonth = lastDay.getDate();
     const startingDayOfWeek = firstDay.getDay();
-    
+
     return { daysInMonth, startingDayOfWeek };
   };
 
@@ -250,10 +288,10 @@ const EnhancedBookingForm: React.FC = () => {
             <div>
               <p className="text-sm text-gray-400 mb-1">Selected Session:</p>
               <p className="text-white font-bold">
-                {new Date(formData.date).toLocaleDateString('en-US', { 
-                  weekday: 'long', 
-                  month: 'long', 
-                  day: 'numeric' 
+                {new Date(formData.date).toLocaleDateString('en-GB', {
+                  weekday: 'long',
+                  month: 'long',
+                  day: 'numeric'
                 })} at {formData.time}
               </p>
               {price && (
@@ -298,7 +336,7 @@ const EnhancedBookingForm: React.FC = () => {
                   <ChevronLeft className="w-5 h-5" />
                 </button>
                 <h3 className="text-lg font-bold">
-                  {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase()}
+                  {currentMonth.toLocaleDateString('en-GB', { month: 'long', year: 'numeric' }).toUpperCase()}
                 </h3>
                 <button
                   onClick={() => setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1))}
@@ -326,13 +364,9 @@ const EnhancedBookingForm: React.FC = () => {
                     {(() => {
                       const { daysInMonth, startingDayOfWeek } = getDaysInMonth(currentMonth);
                       const days = [];
-                      
-                      // Empty cells for days before month starts
                       for (let i = 0; i < startingDayOfWeek; i++) {
                         days.push(<div key={`empty-${i}`} />);
                       }
-                      
-                      // Days of the month
                       for (let day = 1; day <= daysInMonth; day++) {
                         const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
                         const dateStr = date.toISOString().split('T')[0];
@@ -340,28 +374,36 @@ const EnhancedBookingForm: React.FC = () => {
                         const isPast = date < new Date(new Date().setHours(0, 0, 0, 0));
                         const isSelected = selectedDate === dateStr;
                         const hasSlots = dayAvailability && dayAvailability.slots.length > 0;
-                        
+
+                        // Also check if all slots are booked
+                        let allBooked = false;
+                        if (dayAvailability && dayAvailability.slots.length > 0) {
+                          const freeSlots = dayAvailability.slots.filter(slot =>
+                            !bookedSlots.some(b => b.date === dateStr && b.startHour === slot.time)
+                          );
+                          allBooked = freeSlots.length === 0;
+                        }
+
                         days.push(
                           <button
                             key={day}
-                            onClick={() => !isPast && hasSlots && handleDateSelect(dateStr)}
-                            disabled={isPast || !hasSlots}
+                            onClick={() => !isPast && hasSlots && !allBooked && handleDateSelect(dateStr)}
+                            disabled={isPast || !hasSlots || allBooked}
                             className={`
                               aspect-square rounded text-sm transition-all
                               ${isPast ? 'opacity-30 cursor-not-allowed' : ''}
-                              ${hasSlots && !isPast ? 'hover:bg-primary/20 cursor-pointer' : ''}
+                              ${hasSlots && !isPast && !allBooked ? 'hover:bg-primary/20 cursor-pointer' : ''}
                               ${isSelected ? 'bg-primary text-white' : ''}
-                              ${!hasSlots && !isPast ? 'text-gray-600' : ''}
+                              ${(!hasSlots || allBooked) && !isPast ? 'text-gray-600' : ''}
                             `}
                           >
                             {day}
-                            {hasSlots && !isPast && (
+                            {hasSlots && !isPast && !allBooked && (
                               <div className="w-1 h-1 bg-primary rounded-full mx-auto mt-1"></div>
                             )}
                           </button>
                         );
                       }
-                      
                       return days;
                     })()}
                   </div>
@@ -371,34 +413,47 @@ const EnhancedBookingForm: React.FC = () => {
 
             {/* Time Slots */}
             <div>
-              {selectedDate ? (
-                <>
-                  <h4 className="font-bold mb-3">
-                    AVAILABLE SLOTS FOR {new Date(selectedDate).toLocaleDateString('en-US', { 
-                      month: 'short', 
-                      day: 'numeric' 
-                    }).toUpperCase()}
-                  </h4>
-                  <div className="space-y-2 max-h-80 overflow-y-auto p-2">
-                    {getAvailabilityForDate(selectedDate)?.slots.map((slot: TimeSlot, idx: number) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleSlotSelect(slot)}
-                        className="w-full p-3 bg-black hover:bg-primary/10 rounded-lg text-left transition-all flex items-center justify-between group card-shadow"
-                      >
-                        <div className="flex items-center gap-3">
-                          <Clock className="w-4 h-4 text-gray-400" />
-                          <span className="font-bold">{slot.time}</span>
-                        </div>
-                        <div className="flex items-center gap-2">
-                          <span className="text-sm text-gray-400">£{slot.price}/hr</span>
-                          <Check className="w-4 h-4 text-green-500 opacity-0 group-hover:opacity-100" />
-                        </div>
-                      </button>
-                    ))}
+              {selectedDate ? (() => {
+                const slotsForDate = getAvailabilityForDate(selectedDate)?.slots || [];
+                const freeSlots = slotsForDate.filter(slot =>
+                  !bookedSlots.some(
+                    b => b.date === selectedDate && b.startHour === slot.time
+                  )
+                );
+
+                return freeSlots.length > 0 ? (
+                  <>
+                    <h4 className="font-bold mb-3">
+                      AVAILABLE SLOTS FOR {new Date(selectedDate).toLocaleDateString('en-GB', {
+                        month: 'short',
+                        day: 'numeric'
+                      }).toUpperCase()}
+                    </h4>
+                    <div className="space-y-2 max-h-80 overflow-y-auto p-2">
+                      {freeSlots.map((slot: TimeSlot, idx: number) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleSlotSelect(slot)}
+                          className="w-full p-3 bg-black hover:bg-primary/10 rounded-lg text-left transition-all flex items-center justify-between group card-shadow"
+                        >
+                          <div className="flex items-center gap-3">
+                            <Clock className="w-4 h-4 text-gray-400" />
+                            <span className="font-bold">{slot.time}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-sm text-gray-400">£{slot.price}/hr</span>
+                            <Check className="w-4 h-4 text-green-500 opacity-0 group-hover:opacity-100" />
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex items-center justify-center h-full text-gray-500">
+                    <p>No available slots for this date</p>
                   </div>
-                </>
-              ) : (
+                );
+              })() : (
                 <div className="flex items-center justify-center h-full text-gray-500">
                   <p>Select a date to view time slots</p>
                 </div>
